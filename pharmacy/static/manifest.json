@@ -1,0 +1,16 @@
+{
+	"name": "Health Guide",
+	"short_name": "Health Guide",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#f7f7f7",
+	"theme_color": "#f7f7f7",
+	"icons": [
+		{
+			"src": "favicon.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		}
+	],
+	"description": "Health Guide is a web application that provides information about health and wellness. It also provides a platform for users to ask questions and get answers from health professionals."
+}
