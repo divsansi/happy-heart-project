@@ -166,9 +166,7 @@
 
 <FirebaseApp {auth} {firestore}>
 	<SignedIn>
-		<div class="min-h-screen w-full bg-[url('/app-bg.jpeg')] bg-cover bg-fixed">
-			<slot />
-		</div>
+		<slot />
 
 		<BottomNav position="fixed" classInner="grid-cols-4">
 			<SignedIn let:signOut>
@@ -182,18 +180,12 @@
 						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
-				<!-- <BottomNavItem btnName="Speeches" href="/speeches">
-				<LandmarkSolid
-					class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
-				/>
-			</BottomNavItem> -->
-
 				<BottomNavItem btnName="Profile" href="/profile">
 					<UserCircleSolid
 						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
-				<BottomNavItem btnName="Log Out" on:click={signOut}>
+				<BottomNavItem btnName="Logout" on:click={signOut}>
 					<ArrowRightToBracketOutline
 						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
@@ -313,7 +305,12 @@
 							<Register href="/">
 								<svelte:fragment slot="top">
 									<!-- <img class="mr-2 h-8 w-8" src="/images/logo.svg" alt="logo" /> -->
-									Happy Heart
+									<img
+										class="mr-2 h-32 w-32"
+										src="https://i.postimg.cc/Gm7yDmVc/logo-white.png"
+										alt="logo"
+									/>
+									<!-- Happy Heart -->
 								</svelte:fragment>
 								<div class="space-y-4 p-6 sm:p-8 md:space-y-6">
 									<form

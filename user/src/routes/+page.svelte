@@ -41,82 +41,279 @@
 	};
 </script>
 
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+	:root{
+		--black: #000000;
+		--blackGrey: #242424;
+		--grey: #808080;
+		--whiteGrey: #ECECEC;
+		--white: #FFFFFF;
+		--accent: #1B72B5;
+		--accent2: #E6F4FC;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		color: var(--blackGrey);
+		background: var(--white);
+	}
+
+	a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	h1 {
+		font-size: 18px;
+		font-weight: 500;
+	}
+	h2 {
+		font-size: 16px;
+		font-weight: 500;
+	}
+	h3 {
+		font-size: 14px;
+		font-weight: 500;
+	}
+	h4 {
+		font-size: 12px;
+		font-weight: 500;
+	}
+	h5 {
+		font-size: 10px;
+		font-weight: 500;
+	}
+	h6 {
+		font-size: 8px;
+		font-weight: 500;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		text-transform: uppercase;
+		font-weight: 400;
+		color: #1B72B5;
+	}
+	p {
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1.5;
+		text-align: justify;
+		text-align-last: left;
+	}
+	.light {
+		font-weight: 300;
+	}
+	.regular {
+		font-weight: 400;
+	}
+	.medium {
+		font-weight: 500;
+	}
+	.semibold {
+		font-weight: 600;
+	}
+	.bold {
+		font-weight: 700;
+	}
+	.italic {
+		font-style: italic;
+	}
+
+	main {
+		width: 85%;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 25px 0 70px 0;
+		gap: 25px;
+		font-family: "Rubik", sans-serif;
+	}
+	main section {
+		width: 100%;
+	}
+
+	.topbarLogo{
+		height: 25px;
+	}
+
+	.userpfp {
+		width: 30px;
+		height: 30px;
+		background: var(--white);
+		border-radius: 5px;
+	}
+	.userpfp img {
+		width: 100%;
+		height: 100%;
+		border-radius: 10px;
+		object-fit: cover;
+	}
+</style>
+
 <SignedIn let:user>
-	<div class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24">
-		<!-- Welcome Card -->
-		<div class="w-full max-w-sm rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800">
-			<div class="flex flex-col items-center pb-10 pt-10">
-				<!-- svelte-ignore a11y-img-redundant-alt -->
-				<img
-					class="mb-3 h-24 w-24 rounded-full shadow-lg"
-					src={avatar(user.uid)}
-					alt="Profile image"
-				/>
-				<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.displayName}</h5>
-				<span class="text-sm text-gray-400">{greeting}!</span>
-				<div class="mt-4 flex md:mt-6">
-					<Button
-						color="light"
-						href="/profile"
-						class="rounded-lgpx-4 ms-2 py-2 text-sm font-medium text-gray-900 backdrop-blur-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-						>Profile</Button
-					>
+	<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+		<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
+
+		<div class="userpfp">
+			<img src="{avatar(user.uid)}" alt="Profile">
+		</div>
+
+		<script>
+			const userpfp = document.querySelector('.userpfp');
+
+			if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
+				userpfp.style.display = 'none';
+			} else if (!document.cookie) {
+				userpfp.style.display = 'none';
+			}
+		</script>
+
+		<script>
+			window.addEventListener('scroll', () => {
+				const topBar = document.getElementById('topBar');
+				if (window.scrollY > 0) {
+					topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+					topBar.style.transition = 'box-shadow 0.5s';
+				} else {
+					topBar.style.boxShadow = 'none';
+					topBar.style.transition = 'box-shadow 0.5s';
+				}
+			});
+		</script>
+	</section>
+
+	<main>
+
+		<section class="flex flex-col" style="background: var(--whiteGrey); padding: 25px; border-radius: 15px; align-items: flex-start; gap: 5px;">
+			<div class="flex flex-row" style="align-items: center; gap: 5px;">
+				<h1>Welcome</h1>
+				<h1 class="light" style="color: var(--blackGrey);">{user.displayName.split(' ')[0]}</h1>
+			</div>
+
+			<div class="flex flex-row" style="align-items: center; gap: 5px;">
+				<i class="fa-solid fa-location-arrow" style="color: #1B72B5; font-size: 8px;"></i>
+				<p class="light" style="font-size: 10px; text-transform: uppercase;" id="location">Fetching...</p>
+			</div>
+
+			<script>
+				function fetchLocationAndClimate() {
+					navigator.geolocation.getCurrentPosition(showLocation, handleError);
+				}
+
+				function showLocation(position) {
+					const latitude = position.coords.latitude;
+					const longitude = position.coords.longitude;
+
+					// Use OpenWeatherMap API to get current weather
+					const apiKey = 'df3fc27416418810b999a80051c9d82c';
+					const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+
+					fetch(weatherUrl)
+						.then(response => response.json())
+						.then(data => {
+							const city = data.name;
+							const country = data.sys.country;
+
+							const location = document.getElementById("location");
+							location.innerHTML = `${city}, ${country}`;
+						})
+						.catch(error => console.error("Error fetching location:", error));
+				}
+
+				function handleError(error) {
+					console.error("Error fetching location:", error.message);
+				}
+
+				fetchLocationAndClimate();
+				setTimeout(fetchLocationAndClimate, 3000);
+			</script>
+		</section>
+
+		<section class="flex" style="background: var(--accent2); border-radius: 15px; justify-content: center;">
+			<div class="flex flex-col" style="width: 100%; padding: 25px; gap: 20px;">
+				<h1>Quote of the day</h1>
+
+				<div class="flex flex-col" style="gap: 15px;">
+					<p class="light" id="quoteContent">Fetching...</p>
+					<p class="regular italic" style="width: 100%; text-align-last: right;" id="quoteAuthor">Fetching...</p>
 				</div>
 			</div>
+
+			<script>
+				const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+				const targetUrl = 'https://zenquotes.io/api/today';
+
+				function fetchQuote() {
+					fetch(proxyUrl + targetUrl)
+						.then(response => response.json())
+						.then(data => {
+							const quote = data[0].q;
+							const author = data[0].a;
+
+							const quoteContent = document.getElementById('quoteContent');
+							const quoteAuthor = document.getElementById('quoteAuthor');
+
+							quoteContent.innerHTML = quote;
+							quoteAuthor.innerHTML = `- ${author}`;
+						})
+						.catch(error => console.error("Error fetching quote:", error));
+				}
+
+				fetchQuote();
+				setTimeout(fetchQuote, 3000);
+			</script>
+		</section>
+
+		<section class="flex flex-col" style="justify-content: center; gap: 20px;">
+			<h1 style="color: white;">More Links</h1>
+
+			<span class="flex flex-col" style="gap: 10px;">
+				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/games">
+					<h1 class="light" style="font-size: 14px;">Games</h1>
+					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
+				</a>
+
+				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/groupchat">
+					<h1 class="light" style="font-size: 14px;">Forum</h1>
+					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
+				</a>
+
+				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/pharmacies">
+					<h1 class="light" style="font-size: 14px;">Pharmacies</h1>
+					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
+				</a>
+
+				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/profile">
+					<h1 class="light" style="font-size: 14px;">Profile</h1>
+					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
+				</a>
+
+				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/feedback">
+					<h1 class="light" style="font-size: 14px;">Feedback</h1>
+					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
+				</a>
+			</span>
+		</section>
+
+		<div class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24">
+			<span class="hidden"> {checkOnboarding(user)}</span>
+			{#if !onBoarding}
+				<Alert>
+					<InfoCircleSolid slot="icon" class="h-4 w-4" />
+					<span class="font-medium">Attention!</span>
+					Please complete the on-boarding process for us to better understand you.
+					<a href="/on-boarding" class="font-bold underline">Click Here</a>
+				</Alert>
+			{/if}
 		</div>
 
-		<span class="hidden"> {checkOnboarding(user)}</span>
-		{#if !onBoarding}
-			<Alert>
-				<InfoCircleSolid slot="icon" class="h-4 w-4" />
-				<span class="font-medium">Attention!</span>
-				Please complete the on-boarding process for us to better understand you.
-				<a href="/on-boarding" class="font-bold underline">Click Here</a>
-			</Alert>
-		{/if}
-
-		<div
-			class="w-full max-w-sm rounded-lg shadow backdrop-blur-md dark:border-gray-700 dark:bg-gray-800"
-		>
-			<figure
-				class="flex flex-col items-center justify-center rounded-t-lg p-8 text-center backdrop-blur-md md:rounded-t-none md:rounded-tl-lg md:border-e dark:border-gray-700 dark:bg-gray-800"
-			>
-				<blockquote class="mx-auto mb-4 max-w-2xl text-white dark:text-white">
-					<p class="my-4 font-light">"{quote.QUOTE}"</p>
-				</blockquote>
-				<div class="space-y-0.5 text-left font-medium dark:text-white">
-					<div>- {quote.AUTHOR} -</div>
-				</div>
-			</figure>
-		</div>
-
-		<!-- Other Sections buttons 2x2 -->
-		<div
-			class="w-full max-w-sm rounded-lg shadow backdrop-blur-md dark:border-gray-700 dark:bg-gray-800"
-		>
-			<h2 class="p-4 text-center text-xl font-medium text-gray-900 dark:text-white">
-				We got your back!
-			</h2>
-			<div class="grid grid-cols-2 gap-4 p-4">
-				<Button href="/games">
-					Games <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/speeches">
-					Speeches <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/status">
-					Status Update <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/gethelp">
-					Get Help <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/groupchat">
-					Group Chat <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href={"/pharmacies"}>
-					Pharmacies <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-			</div>
-		</div>
-	</div>
+	</main>
 </SignedIn>
