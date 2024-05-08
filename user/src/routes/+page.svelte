@@ -41,123 +41,6 @@
 	};
 </script>
 
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
-	:root{
-		--black: #000000;
-		--blackGrey: #242424;
-		--grey: #808080;
-		--whiteGrey: #ECECEC;
-		--white: #FFFFFF;
-		--accent: #1B72B5;
-		--accent2: #E6F4FC;
-	}
-
-	* {
-		margin: 0;
-		padding: 0;
-	}
-
-	html {
-		scroll-behavior: smooth;
-		color: var(--blackGrey);
-		background: var(--white);
-	}
-
-	a {
-		color: var(--accent);
-		text-decoration: none;
-	}
-
-	h1 {
-		font-size: 18px;
-		font-weight: 500;
-	}
-	h2 {
-		font-size: 16px;
-		font-weight: 500;
-	}
-	h3 {
-		font-size: 14px;
-		font-weight: 500;
-	}
-	h4 {
-		font-size: 12px;
-		font-weight: 500;
-	}
-	h5 {
-		font-size: 10px;
-		font-weight: 500;
-	}
-	h6 {
-		font-size: 8px;
-		font-weight: 500;
-	}
-	h1, h2, h3, h4, h5, h6 {
-		text-transform: uppercase;
-		font-weight: 400;
-		color: #1B72B5;
-	}
-	p {
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 1.5;
-		text-align: justify;
-		text-align-last: left;
-	}
-	.light {
-		font-weight: 300;
-	}
-	.regular {
-		font-weight: 400;
-	}
-	.medium {
-		font-weight: 500;
-	}
-	.semibold {
-		font-weight: 600;
-	}
-	.bold {
-		font-weight: 700;
-	}
-	.italic {
-		font-style: italic;
-	}
-
-	main {
-		width: 85%;
-		height: auto;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 25px 0 70px 0;
-		gap: 25px;
-		font-family: "Rubik", sans-serif;
-	}
-	main section {
-		width: 100%;
-	}
-
-	.topbarLogo{
-		height: 25px;
-	}
-
-	.userpfp {
-		width: 30px;
-		height: 30px;
-		background: var(--white);
-		border-radius: 5px;
-	}
-	.userpfp img {
-		width: 100%;
-		height: 100%;
-		border-radius: 10px;
-		object-fit: cover;
-	}
-</style>
-
 <SignedIn let:user>
 	<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
 		<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
@@ -172,9 +55,7 @@
 			if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
 				userpfp.style.display = 'none';
 			}
-		</script>
 
-		<script>
 			window.addEventListener('scroll', () => {
 				const topBar = document.getElementById('topBar');
 				if (window.scrollY > 0) {
