@@ -37,23 +37,6 @@
 	const greeting = hours < 12 ? 'Good Morning' : hours < 18 ? 'Good Afternoon' : 'Good Evening';
 	const quote = getRandomQuote();
 
-	async function updateAvailability() {
-		const user = auth.currentUser;
-		if (user) {
-			const counselorRef = doc(db, `counselor/${user.uid}`);
-			await setDoc(
-				counselorRef,
-				{ available: serverTimestamp(), username: user.displayName },
-				{ merge: true }
-			);
-		}
-	}
-
-	onMount(() => {
-		updateAvailability();
-		intervalId = setInterval(updateAvailability, 30000);
-	});
-
 	const accept = async (prescription: string, patient: string, user: string) => {
 		await acceptPrescription(prescription, patient, user);
 		toast.success('Prescription accepted successfully');
@@ -64,7 +47,7 @@
 <Toaster />
 <SignedIn let:user>
 	<div
-		class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24 md:grid md:grid-cols-3 md:pt-16"
+		class="mx-auto flex max-w-xl flex-col items-center justify-center gap-4 overflow-y-scroll pb-24"
 	>
 		<!-- Existing Welcome Card, Alert, Quotes, and Navigation Buttons -->
 		<div class="w-full max-w-sm rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800">
