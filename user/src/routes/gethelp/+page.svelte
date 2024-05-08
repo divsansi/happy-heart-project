@@ -44,8 +44,8 @@
 </script>
 
 <main class="p-4">
-	<h1 class="text-2xl font-bold">Available Counselors</h1>
-	<div class=" grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+	<div class=" mx-auto grid max-w-xl grid-cols-1 gap-4">
+		<h1 class="text-2xl font-bold">Available Counselors</h1>
 		{#each counselors as counselor}
 			<div class="flex flex-col gap-4 rounded-lg p-4 shadow-sm backdrop-blur-md">
 				<div class="flex flex-row items-center justify-between">

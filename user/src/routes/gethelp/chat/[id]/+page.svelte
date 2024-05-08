@@ -41,44 +41,48 @@
 	};
 </script>
 
-<SignedIn let:user>
-	<Collection
-		ref={query(
-			collection(db, `/counselor/${data.props.id}/chats`),
-			where('chatuid', '==', user.uid),
-			orderBy('createdAt', 'asc'),
-			limit(40)
-		)}
-		let:data
-		let:count
-	>
-		<div class="flex flex-col gap-4 overflow-y-auto pb-36 pl-2 pr-4 pt-4">
-			{#each data as post}
-				<div class={`flex w-full ${post.uid === user.uid ? 'justify-end' : 'justify-start'}`}>
-					<div
-						class={`flex items-center gap-2.5 ${post.uid === user.uid ? 'flex-row-reverse' : 'flex-row'}`}
-					>
-						<!-- svelte-ignore a11y-img-redundant-alt -->
-						<img
-							class="h-8 w-8 rounded-full backdrop-blur-md"
-							src={avatar(post.uid)}
-							alt="User image"
-						/>
+<div class="mx-auto max-w-xl">
+	<SignedIn let:user>
+		<Collection
+			ref={query(
+				collection(db, `/counselor/${data.props.id}/chats`),
+				where('chatuid', '==', user.uid),
+				orderBy('createdAt', 'asc'),
+				limit(40)
+			)}
+			let:data
+			let:count
+		>
+			<div class="mx-auto flex max-w-xl flex-col gap-4 overflow-y-auto pb-36 pl-2 pr-4 pt-4">
+				{#each data as post}
+					<div class={`flex w-full ${post.uid === user.uid ? 'justify-end' : 'justify-start'}`}>
 						<div
-							class={`leading-1.5 flex max-w-[320px] flex-col ${post.uid === user.uid ? 'items-end bg-blue-100' : 'items-start bg-gray-100'} rounded-xl p-2`}
+							class={`flex items-center gap-2.5 ${post.uid === user.uid ? 'flex-row-reverse' : 'flex-row'}`}
 						>
-							<p class="py-1 text-sm font-normal text-gray-900">
-								{post.text}
-							</p>
+							<!-- svelte-ignore a11y-img-redundant-alt -->
+							<img
+								class="h-8 w-8 rounded-full backdrop-blur-md"
+								src={avatar(post.uid)}
+								alt="User image"
+							/>
+							<div
+								class={`leading-1.5 flex max-w-[320px] flex-col ${post.uid === user.uid ? 'items-end bg-blue-100' : 'items-start bg-gray-100'} rounded-xl p-2`}
+							>
+								<p class="py-1 text-sm font-normal text-gray-900">
+									{post.text}
+								</p>
+							</div>
 						</div>
 					</div>
-				</div>
-			{/each}
-		</div>
-	</Collection>
+				{/each}
+			</div>
+		</Collection>
 
-	<div class="fixed bottom-0 left-0 right-0 mb-16 flex flex-row gap-4 p-4 backdrop-blur-md">
-		<Input type="text" placeholder="Type your message here..." bind:value={message} />
-		<Button on:click={() => sendMessage(user)}>Send</Button>
-	</div>
-</SignedIn>
+		<div
+			class="fixed bottom-0 left-0 right-0 mx-auto mb-16 flex max-w-xl flex-row gap-4 p-4 backdrop-blur-md"
+		>
+			<Input type="text" placeholder="Type your message here..." bind:value={message} />
+			<Button on:click={() => sendMessage(user)}>Send</Button>
+		</div>
+	</SignedIn>
+</div>

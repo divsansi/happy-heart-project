@@ -37,11 +37,11 @@
 <SignedIn let:auth let:user>
 	<!-- Notes -->
 	<Collection ref="status/{user.uid}/status" let:data let:count>
-		<p class="p-2 text-sm font-thin text-gray-400 dark:text-white">
+		<p class="mx-auto max-w-xl p-2 text-sm font-thin text-gray-400 dark:text-white">
 			You have {count} Status Records
 		</p>
 		<div
-			class=" flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-36 pl-2 pr-4 pt-4"
+			class=" mx-auto flex max-w-xl flex-col items-center justify-center gap-4 overflow-y-scroll pb-36 pl-2 pr-4 pt-4"
 		>
 			{#each orderData(data) as post}
 				{#if post.uid === user.uid}
@@ -70,7 +70,9 @@
 	</Collection>
 
 	<!-- Add Status Note UI -->
-	<div class="fixed bottom-0 left-0 right-0 mb-16 flex flex-row gap-4 p-4 backdrop-blur-md">
+	<div
+		class="fixed bottom-0 left-0 right-0 mx-auto mb-16 flex max-w-xl flex-row gap-4 p-4 backdrop-blur-md"
+	>
 		<Input type="email" placeholder="Status Note" size="md" bind:value={note} />
 		<Button
 			on:click={() => {

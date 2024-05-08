@@ -44,7 +44,7 @@
 
 <SignedIn let:user>
 	<Collection ref={q} let:data let:count>
-		<div class="flex flex-col gap-4 overflow-y-auto pb-36 pl-2 pr-4 pt-4">
+		<div class="mx-auto flex max-w-xl flex-col gap-4 overflow-y-auto pb-36 pl-2 pr-4 pt-4">
 			{#each data as post}
 				<div class={`flex w-full ${post.uid === user.uid ? 'justify-end' : 'justify-start'}`}>
 					<div
@@ -65,7 +65,9 @@
 		</div>
 	</Collection>
 
-	<div class="fixed bottom-0 left-0 right-0 mb-16 flex flex-row gap-4 p-4 backdrop-blur-md">
+	<div
+		class="fixed bottom-0 left-0 right-0 mx-auto mb-16 flex max-w-xl flex-row gap-4 p-4 backdrop-blur-md"
+	>
 		<Input type="text" placeholder="Type your message here..." bind:value={message} />
 		<Button on:click={() => sendMessage(user)}>Send</Button>
 	</div>

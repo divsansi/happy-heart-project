@@ -36,9 +36,7 @@
 	<span class="hidden"
 		>{getNearestCity(user.uid).then((city) => (userData.nearestCity = city))}</span
 	>
-	<div
-		class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24 md:grid md:grid-cols-3 md:pt-16"
-	>
+	<div class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24">
 		<!-- Welcome Card -->
 		<div
 			class="w-full max-w-sm rounded-lg shadow backdrop-blur-md dark:border-gray-700 dark:bg-gray-800"

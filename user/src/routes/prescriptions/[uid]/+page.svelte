@@ -7,7 +7,7 @@
 
 <SignedIn let:user>
 	<div
-		class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24 md:grid md:grid-cols-3 md:pt-16"
+		class="mx-auto flex max-w-xl flex-col items-center justify-center gap-4 overflow-y-scroll pb-24"
 	>
 		<!-- Welcome Card -->
 
