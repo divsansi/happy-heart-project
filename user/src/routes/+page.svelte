@@ -170,8 +170,8 @@
 					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
 				</a>
 
-				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/profile">
-					<h1 class="light" style="font-size: 14px;">Profile</h1>
+				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/echanneling">
+					<h1 class="light" style="font-size: 14px;">E-Channeling</h1>
 					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
 				</a>
 
