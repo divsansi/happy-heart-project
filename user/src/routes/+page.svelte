@@ -171,8 +171,6 @@
 
 			if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
 				userpfp.style.display = 'none';
-			} else if (!document.cookie) {
-				userpfp.style.display = 'none';
 			}
 		</script>
 
