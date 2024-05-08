@@ -11,7 +11,7 @@
 
 	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import {
-		ArrowLeftToBracketSolid,
+		ArrowLeftToBracketOutline,
 		ArrowRightToBracketOutline,
 		HomeSolid,
 		LandmarkSolid,
@@ -211,7 +211,7 @@
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Log In" href="/login">
-					<ArrowLeftToBracketSolid
+					<ArrowLeftToBracketOutline
 						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
