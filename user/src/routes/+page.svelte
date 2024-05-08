@@ -98,8 +98,8 @@
 				We got your back!
 			</h2>
 			<div class="grid grid-cols-2 gap-4 p-4">
-				<Button href="/journal">
-					Journal <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
+				<Button href="/games">
+					Games <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
 				</Button>
 				<Button href="/speeches">
 					Speeches <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
