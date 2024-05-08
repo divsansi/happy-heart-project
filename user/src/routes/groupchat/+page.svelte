@@ -1,74 +1,49 @@
 <script lang="ts">
-	import { SignedIn, Collection } from 'sveltefire';
-	import { Section } from 'flowbite-svelte-blocks';
-	import { Input, Button } from 'flowbite-svelte';
 	import { createAvatar } from '@dicebear/core';
 	import { identicon } from '@dicebear/collection';
-	import { app } from '$lib/firebase';
-	import {
-		addDoc,
-		collection,
-		getFirestore,
-		limit,
-		orderBy,
-		query,
-		serverTimestamp
-	} from 'firebase/firestore';
-	import { onMount } from 'svelte';
+	import { SignedIn } from 'sveltefire';
 
-	const avatar = createAvatar(identicon, {
-		seed: 'User',
-		backgroundType: ['gradientLinear', 'solid']
-	});
-
-	const svg = avatar.toDataUriSync();
-
-	let message = '';
-
-	const db = getFirestore(app);
-
-	const sendMessage = async (user: any) => {
-		if (message.trim() === '') return;
-
-		await addDoc(collection(db, 'messages'), {
-			text: message,
-			createdAt: serverTimestamp(),
-			uid: user.uid
-		});
-		message = '';
+	const avatar = (uid: string) => {
+		const av = createAvatar(identicon, { seed: uid, backgroundType: ['solid'] });
+		return av.toDataUriSync();
 	};
-
-	// Firebase query to get latest 20 messages from the collection 'messages' ordered by createdAt
-	$: q = query(collection(db, 'messages'), orderBy('createdAt', 'asc'), limit(20));
 </script>
 
 <SignedIn let:user>
-	<Collection ref={q} let:data let:count>
-		<div class="mx-auto flex max-w-xl flex-col gap-4 overflow-y-auto pb-36 pl-2 pr-4 pt-4">
-			{#each data as post}
-				<div class={`flex w-full ${post.uid === user.uid ? 'justify-end' : 'justify-start'}`}>
-					<div
-						class={`flex items-center gap-2.5 ${post.uid === user.uid ? 'flex-row-reverse' : 'flex-row'}`}
-					>
-						<!-- svelte-ignore a11y-img-redundant-alt -->
-						<img class="h-8 w-8 rounded-full backdrop-blur-md" src={svg} alt="User image" />
-						<div
-							class={`leading-1.5 flex max-w-[320px] flex-col ${post.uid === user.uid ? 'items-end bg-blue-100' : 'items-start bg-gray-100'} rounded-xl p-2`}
-						>
-							<p class="py-1 text-sm font-normal text-gray-900">
-								{post.text}
-							</p>
-						</div>
-					</div>
-				</div>
-			{/each}
-		</div>
-	</Collection>
+	<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+		<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
 
-	<div
-		class="fixed bottom-0 left-0 right-0 mx-auto mb-16 flex max-w-xl flex-row gap-4 p-4 backdrop-blur-md"
-	>
-		<Input type="text" placeholder="Type your message here..." bind:value={message} />
-		<Button on:click={() => sendMessage(user)}>Send</Button>
-	</div>
+		<div class="userpfp">
+			<img src="{avatar(user.uid)}" alt="Profile">
+		</div>
+
+		<script>
+			const userpfp = document.querySelector('.userpfp');
+
+			if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
+				userpfp.style.display = 'none';
+			}
+
+			window.addEventListener('scroll', () => {
+				const topBar = document.getElementById('topBar');
+				if (window.scrollY > 0) {
+					topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+					topBar.style.transition = 'box-shadow 0.5s';
+				} else {
+					topBar.style.boxShadow = 'none';
+					topBar.style.transition = 'box-shadow 0.5s';
+				}
+			});
+		</script>
+	</section>
+
+	<main>
+
+		<section class="flex flex-col" style="justify-content: center; gap: 20px;">
+			<h1 style="color: white;">Forum</h1>
+
+			<iframe style="height: calc(100vh - 220px); width: 100%; border-radius: 10px;" src="https://happy-heart-server.onrender.com" title="Game" frameborder="0"></iframe>
+		</section>
+
+	</main>
 </SignedIn>
