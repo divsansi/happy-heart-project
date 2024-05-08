@@ -12,20 +12,6 @@
 		return av.toDataUriSync();
 	};
 
-	// using time of day to determine the greeting
-	const date = new Date();
-	const hours = date.getHours();
-	let greeting = '';
-	if (hours < 12) {
-		greeting = 'Good Morning';
-	} else if (hours < 18) {
-		greeting = 'Good Afternoon';
-	} else {
-		greeting = 'Good Evening';
-	}
-
-	const quote = getRandomQuote();
-
 	let onBoarding = false;
 
 	const checkOnboarding = async (user: any) => {

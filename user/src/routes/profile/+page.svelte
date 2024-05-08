@@ -33,58 +33,65 @@
 
 <Toaster />
 <SignedIn let:user>
-	<span class="hidden"
-		>{getNearestCity(user.uid).then((city) => (userData.nearestCity = city))}</span
-	>
-	<div class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24">
-		<!-- Welcome Card -->
-		<div
-			class="w-full max-w-sm rounded-lg shadow backdrop-blur-md dark:border-gray-700 dark:bg-gray-800"
-		>
-			<div class="flex flex-col items-center pb-10 pt-10">
-				<!-- svelte-ignore a11y-img-redundant-alt -->
-				<img
-					class="mb-3 h-24 w-24 rounded-full shadow-lg"
-					src={avatar(user.uid)}
-					alt="Profile image"
-				/>
-				<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.displayName}</h5>
-			</div>
+	<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+		<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
+
+		<div class="userpfp">
+			<img src="{avatar(user.uid)}" alt="Profile">
 		</div>
 
-		<!-- Profile Information Card ( Nearest City ) -->
-		<div
-			class="w-full max-w-sm rounded-lg border shadow backdrop-blur-md dark:border-gray-700 dark:bg-gray-800"
-		>
-			<div class="flex flex-col items-center pb-10 pt-10">
-				<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Nearest City</h5>
-				<span class="text-sm text-white">{userData.nearestCity}</span>
-				{#if cityEdit}
-					<div class="mt-4 flex md:mt-6">
-						<Input
-							type="text"
-							class="rounded-lgpx-4 py-2 text-sm font-medium text-gray-900 backdrop-blur-md dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
-							placeholder="Enter your nearest city"
-							bind:value={cityName}
-						/>
-						<Button
-							color="light"
-							class="rounded-lgpx-4 ms-2 bg-white py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-							on:click={() => saveCity(user.uid)}
-						>
-							Save
-						</Button>
-					</div>
-				{/if}
-				<div class="mt-4 flex md:mt-6">
-					<Button
-						color="light"
-						on:click={editCity}
-						class="rounded-lgpx-4 ms-2 bg-white py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-						>Edit</Button
-					>
-				</div>
+		<script>
+			const userpfp = document.querySelector('.userpfp');
+
+			if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
+				userpfp.style.display = 'none';
+			}
+
+			window.addEventListener('scroll', () => {
+				const topBar = document.getElementById('topBar');
+				if (window.scrollY > 0) {
+					topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+					topBar.style.transition = 'box-shadow 0.5s';
+				} else {
+					topBar.style.boxShadow = 'none';
+					topBar.style.transition = 'box-shadow 0.5s';
+				}
+			});
+		</script>
+	</section>
+
+	<span class="hidden">{getNearestCity(user.uid).then((city) => (userData.nearestCity = city))}</span>
+
+	<main>
+
+		<section class="flex flex-col" style="background: var(--whiteGrey); padding: 40px 25px 30px 25px; border-radius: 15px; align-items: center; gap: 5px;">
+			<div class="flex flex-col" style="align-items: center; gap: 20px;">
+				<img style="height: 100px; width: 100px; border-radius: 15px; border: 1px solid #808080;" src={avatar(user.uid)} alt="Profile image" />
+				<h1 class="light" style="color: var(--blackGrey);">{user.displayName}</h1>
 			</div>
-		</div>
-	</div>
+		</section>
+
+		<section class="flex flex-col" style="background: var(--whiteGrey); padding: 30px 25px; border-radius: 15px; align-items: center; gap: 5px;">
+			<div class="flex flex-col" style="width: 100%; align-items: center; gap: 10px;">
+				<h1 class="light" style="color: var(--blackGrey);">Nearest City</h1>
+				<span class="flex flex-row" style="align-items: center; gap: 10px;">
+					<i class="fa-solid fa-location-arrow" style="color: #1B72B5; font-size: 12px;"></i>
+					<h2 class="regular" style="color: var(--blackGrey);">{userData.nearestCity}</h2>
+				</span>
+				
+				<span class="flex flex-col" style="width: 100%; margin-top: 15px; gap: 10px;">
+					{#if cityEdit}
+						<div class="flex flex-row" style="gap: 10px;">
+							<Input type="text" style="border-radius: 10px;" placeholder="Enter your nearest city" bind:value={cityName} />
+							<button class="flex flex-row" style="background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;" on:click={() => saveCity(user.uid)}>
+								Save
+							</button>
+						</div>
+					{/if}
+					<button on:click={editCity} class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;">Edit</button>
+				</span>
+			</div>
+		</section>
+
+	</main>
 </SignedIn>
