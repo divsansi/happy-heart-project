@@ -113,8 +113,8 @@
 				<Button href="/groupchat">
 					Group Chat <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
 				</Button>
-				<Button href={`/prescriptions/${user.uid}`}>
-					Prescriptions <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
+				<Button href={"/pharmacies"}>
+					Pharmacies <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
 				</Button>
 			</div>
 		</div>
