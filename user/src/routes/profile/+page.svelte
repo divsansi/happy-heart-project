@@ -66,6 +66,7 @@
 
 		<section class="flex flex-col" style="background: var(--whiteGrey); padding: 40px 25px 30px 25px; border-radius: 15px; align-items: center; gap: 5px;">
 			<div class="flex flex-col" style="align-items: center; gap: 20px;">
+				<!-- svelte-ignore a11y-img-redundant-alt -->
 				<img style="height: 100px; width: 100px; border-radius: 15px; border: 1px solid #808080;" src={avatar(user.uid)} alt="Profile image" />
 				<h1 class="light" style="color: var(--blackGrey);">{user.displayName}</h1>
 			</div>

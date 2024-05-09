@@ -94,11 +94,16 @@
 				}
 
 				function handleError(error) {
+					const location = document.getElementById("location");
+					location.innerHTML = "Location not available";
 					console.error("Error fetching location:", error.message);
 				}
 
 				fetchLocationAndClimate();
 				setTimeout(fetchLocationAndClimate, 3000);
+				setInterval(() => {
+					fetchLocationAndClimate();
+				}, 10000);
 			</script>
 		</section>
 
