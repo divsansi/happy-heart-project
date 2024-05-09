@@ -4,6 +4,13 @@
 	import { Card, Button, Label, Input, Select, Toggle, Range } from 'flowbite-svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
 	import { SignedIn } from 'sveltefire';
+	import { createAvatar } from '@dicebear/core';
+	import { identicon } from '@dicebear/collection';
+
+	const avatar = (uid: string) => {
+		const av = createAvatar(identicon, { seed: uid, backgroundType: ['solid'] });
+		return av.toDataUriSync();
+	};
 
 	const db = getFirestore(app);
 
@@ -57,35 +64,64 @@
 
 <Toaster />
 
-<div class="flex min-h-screen w-full flex-col items-center justify-center p-4">
-	<SignedIn let:user>
+<SignedIn let:user>
+<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+	<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
+
+	<div class="userpfp">
+		<img src="{avatar(user.uid)}" alt="Profile">
+	</div>
+
+	<script>
+		const userpfp = document.querySelector('.userpfp');
+
+		if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
+			userpfp.style.display = 'none';
+		}
+
+		window.addEventListener('scroll', () => {
+			const topBar = document.getElementById('topBar');
+			if (window.scrollY > 0) {
+				topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+				topBar.style.transition = 'box-shadow 0.5s';
+			} else {
+				topBar.style.boxShadow = 'none';
+				topBar.style.transition = 'box-shadow 0.5s';
+			}
+		});
+	</script>
+</section>
+
+<main style="height: 100vh;">
+
+	<section>
 		{#if step == 1}
 			<Card>
-				<div class="flex flex-col space-y-6">
-					<h3 class="text-xl font-medium text-gray-900 dark:text-white">Onboarding</h3>
+				<div class="flex flex-col" style="gap: 15px;">
+					<h1>Onboarding</h1>
 					<Label class="space-y-2">
-						<span>What is your primary reason for using this application?</span>
-						<Select class="mt-2" items={reasons} bind:value={answers.q1} />
+						<p class="light">What is your primary reason for using this application?</p>
+						<Select class="light" items={reasons} bind:value={answers.q1} />
 					</Label>
-					<Button
+					<button class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
 						on:click={() => {
 							if (answers.q1 == '') {
 								toast.error('Please Select an Option');
 								return 0;
 							}
 							stepIncrement();
-						}}
-						class="w-full">Next Step</Button
-					>
+						}}>
+						Next Step
+					</button>
 				</div>
 			</Card>
 		{:else if step == 2}
 			<Card>
-				<div class="flex flex-col space-y-6">
-					<h3 class="text-xl font-medium text-gray-900 dark:text-white">Onboarding</h3>
+				<div class="flex flex-col" style="gap: 15px;">
+					<h1>Onboarding</h1>
 					<Label class="space-y-2">
-						<span>Have you been diagnosed with any specific mental health condition?</span>
-						<Toggle
+						<p class="light">Have you been diagnosed with any specific mental health condition?</p>
+						<Toggle class="light"
 							size="large"
 							on:change={() => {
 								q2t = !q2t;
@@ -95,52 +131,48 @@
 							<Input class="mt-2" placeholder="Please Specify" bind:value={answers.q2} />
 						{/if}
 					</Label>
-					<Button
+					<button class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
 						on:click={() => {
 							if (q2t && answers.q2 == '') {
 								toast.error('Please Specify');
 								return 0;
 							}
 							stepIncrement();
-						}}
-						class="w-full">Next Step</Button
-					>
+						}}>
+						Next Step
+						</button>
 				</div>
 			</Card>
 		{:else if step == 3}
 			<Card>
-				<div class="flex flex-col space-y-6">
-					<h3 class="text-xl font-medium text-gray-900 dark:text-white">Onboarding</h3>
+				<div class="flex flex-col" style="gap: 15px;">
+					<h1>Onboarding</h1>
 					<Label class="space-y-2">
-						<span>On a scale of 1-10, how would you rate the severity of your symptoms?</span>
-						<span class="text-xs text-white"
-							>1 being the least severe and 10 being the most severe</span
-						>
+						<p class="light">On a scale of 1-10, how would you rate the severity of your symptoms?</p>
+						<p class="light" style="font-size: 12px;">1 being the least severe and 10 being the most severe</p>
 						<br />
-						<span class="w-full text-center">{'Level of :' + answers.q3}</span>
+						<span class="light">{'Level: ' + answers.q3}</span>
 						<Range id="range-minmax" min="1" max="10" bind:value={answers.q3} />
 					</Label>
-					<Button
+					<button class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
 						on:click={() => {
 							if (q2t && answers.q2 == '') {
 								toast.error('Please Specify');
 								return 0;
 							}
 							stepIncrement();
-						}}
-						class="w-full">Next Step</Button
-					>
+						}}>
+						Next Step
+						</button>
 				</div>
 			</Card>
 		{:else if step == 4}
 			<Card>
-				<div class="flex flex-col space-y-6">
-					<h3 class="text-xl font-medium text-gray-900 dark:text-white">Onboarding</h3>
+				<div class="flex flex-col" style="gap: 15px;">
+					<h1>Onboarding</h1>
 					<Label class="space-y-2">
-						<span
-							>Have you received any previous treatment or support for your mental health concerns?</span
-						>
-						<Toggle
+						<p class="light">Have you received any previous treatment or support for your mental health concerns?</p>
+						<Toggle class="light"
 							size="large"
 							on:change={() => {
 								q4t = !q4t;
@@ -150,57 +182,56 @@
 							<Input class="mt-2" placeholder="Please Specify" bind:value={answers.q4} />
 						{/if}
 					</Label>
-					<Button
+					<button class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
 						on:click={() => {
 							if (q4t && answers.q4 == '') {
 								toast.error('Please Specify');
 								return 0;
 							}
 							stepIncrement();
-						}}
-						class="w-full">Next Step</Button
-					>
+						}}>
+						Next Step
+						</button>
 				</div>
 			</Card>
 		{:else if step == 5}
 			<Card>
-				<div class="flex flex-col space-y-6">
-					<h3 class="text-xl font-medium text-gray-900 dark:text-white">Onboarding</h3>
+				<div class="flex flex-col" style="gap: 15px;">
+					<h1>Onboarding</h1>
 					<Label class="space-y-2">
-						<span
-							>Is there any additional information you would like to provide that could help us
-							better understand your needs and tailor the support accordingly? (Optional)</span
-						>
-						<Input type="text" bind:value={answers.q5} />
+						<p class="light">Is there any additional information you would like to provide that could help us better understand your needs and tailor the support accordingly?</p>
+						<Input type="text" class="light" bind:value={answers.q5} />
 					</Label>
-					<Button
+					<button class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
 						on:click={() => {
 							if (answers.q5 == '') {
 								toast.error('Please Specify');
 								return 0;
 							}
 							stepIncrement();
-						}}
-						class="w-full">Next Step</Button
-					>
+						}}>
+						Next Step
+						</button>
 				</div>
 			</Card>
 		{:else}
 			<Card>
-				<div class="flex flex-col space-y-6">
-					<h3 class="text-xl font-medium text-gray-900 dark:text-white">Onboarding</h3>
+				<div class="flex flex-col" style="gap: 15px;">
+					<h1>Onboarding</h1>
 					<Label class="space-y-2">
-						<span>Thank you for completing the onboarding process</span>
+						<p class="light">Thank you for completing the onboarding process</p>
 					</Label>
-					<Button
+					<button class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
 						on:click={() => {
 							setOnboardingProcess(user.uid);
 							submitOnboarding(user);
-						}}
-						class="w-full">Submit</Button
-					>
+						}}>
+						Submit
+						</button>
 				</div>
 			</Card>
 		{/if}
-	</SignedIn>
-</div>
+	</section>
+
+</main>
+</SignedIn>
