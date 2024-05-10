@@ -97,6 +97,56 @@
 
 	<main>
 
+		<section class="flex flex-col" style="background: var(--whiteGrey); padding: 25px; border-radius: 15px; align-items: flex-start; gap: 5px;">
+			<div class="flex flex-row" style="align-items: center; gap: 5px;">
+				<h1>Welcome</h1>
+				<h1 class="light" style="color: var(--blackGrey);">{user && user.displayName ? user.displayName.split(' ')[0] : ''}</h1>
+			</div>
+
+			<div class="flex flex-row" style="align-items: center; gap: 5px;">
+				<i class="fa-solid fa-location-arrow" style="color: #1B72B5; font-size: 8px;"></i>
+				<p class="light" style="font-size: 10px; text-transform: uppercase;" id="location">Fetching...</p>
+			</div>
+
+			<script>
+				function fetchLocationAndClimate() {
+					navigator.geolocation.getCurrentPosition(showLocation, handleError);
+				}
+
+				function showLocation(position) {
+					const latitude = position.coords.latitude;
+					const longitude = position.coords.longitude;
+
+					// Use OpenWeatherMap API to get current weather
+					const apiKey = 'df3fc27416418810b999a80051c9d82c';
+					const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+
+					fetch(weatherUrl)
+						.then(response => response.json())
+						.then(data => {
+							const city = data.name;
+							const country = data.sys.country;
+
+							const location = document.getElementById("location");
+							location.innerHTML = `${city}, ${country}`;
+						})
+						.catch(error => console.error("Error fetching location:", error));
+				}
+
+				function handleError(error) {
+					const location = document.getElementById("location");
+					location.innerHTML = "Location not available";
+					console.error("Error fetching location:", error.message);
+				}
+
+				fetchLocationAndClimate();
+				setTimeout(fetchLocationAndClimate, 3000);
+				setInterval(() => {
+					fetchLocationAndClimate();
+				}, 10000);
+			</script>
+		</section>
+
 		<section class="flex flex-col" style="justify-content: center; gap: 20px;">
 			<h1 style="color: white;">Available Chats</h1>
 
