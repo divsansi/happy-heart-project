@@ -218,174 +218,171 @@
 	<SignedOut>
 		{#if login}
 			<SignedOut let:auth>
-				<div class="min-w-screen flex min-h-screen flex-col items-center justify-center">
-					<div class="mx-4 w-full max-w-2xl">
-						<Section name="login">
-							<Register href="/">
-								<svelte:fragment slot="top">
-									<!-- <img class="mr-2 h-8 w-8" src="/images/logo.svg" alt="logo" /> -->
-									<img
-										class="mr-2 h-32 w-32"
-										src="https://i.postimg.cc/Gm7yDmVc/logo-white.png"
-										alt="logo"
-									/>
-									<!-- Happy Heart -->
-								</svelte:fragment>
-								<div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-									<form
-										on:submit={(e) => {
-											e.preventDefault();
-											phraseData(auth);
+				<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+					<img class="topbarLogo" src="https://i.postimg.cc/9Xwj56PC/logotext.png" alt="Logo">
+
+					<script>
+						window.addEventListener('scroll', () => {
+							const topBar = document.getElementById('topBar');
+							if (window.scrollY > 0) {
+								topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+								topBar.style.transition = 'box-shadow 0.5s';
+							} else {
+								topBar.style.boxShadow = 'none';
+								topBar.style.transition = 'box-shadow 0.5s';
+							}
+						});
+					</script>
+				</section>
+
+				<div class="flex flex-col" style="height: 100%; width: 100%; background: #ECECEC; margin-top: -55px; align-items: center; justify-content: center;">
+					<div class="flex flex-col" style="width: 80%; gap: 20px;">
+						<span class="flex flex-row" style="width: 100%; padding: 20px 0; align-items: center; justify-content: center; gap: 10px;">
+							<img style="height: 34px; width: 34px;" src="https://i.postimg.cc/YCjBH9rS/favicon.png" alt="logo">
+							<h1 style="font-size: 28px; font-family: 'Rubik', sans-serif;">Login</h1>
+						</span>
+						<form class="flex flex-col" style="width: 100%; gap: 20px;"
+							on:submit={(e) => {
+								e.preventDefault();
+								phraseData(auth);
+							}}
+							action="/"
+						>
+							{#if error.status}
+								<Alert color="red">
+									<span class="font-medium">{error.title}</span>
+									{error.message}
+								</Alert>
+							{/if}
+							<span class="flex flex-col" style="width: 100%; gap: 10px;">
+								<input
+									style="border-radius: 10px; padding: 8px 10px;"
+									type="email"
+									name="email"
+									bind:value={userData.email}
+									placeholder="Email Address"
+									required
+								/>
+								<input
+									style="border-radius: 10px; padding: 8px 10px;"
+									type="password"
+									name="password"
+									bind:value={userData.password}
+									placeholder="Password"
+									required
+								/>
+							</span>
+							<button type="submit" class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;">Login</button>
+							<!-- svelte-ignore a11y-no-static-element-interactions -->
+							<span class="flex flex-col" style="gap: 10px;">
+								<p class="light" style="width: 100%; color: var(--blackGrey); text-transform: uppercase; font-size: 12px; text-align-last: center; padding-top: 20px;">
+									<!-- svelte-ignore a11y-click-events-have-key-events -->
+									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<!-- svelte-ignore a11y-missing-attribute -->
+									New User?
+									<a
+										on:click={() => {
+											login = false;
 										}}
-										class="flex flex-col space-y-6"
-										action="/"
+										class="regular" style="color: var(--accent);"
+										>Signup</a
 									>
-										<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-white">Log In</h3>
-										{#if error.status}
-											<Alert color="red">
-												<span class="font-medium">{error.title}</span>
-												{error.message}
-											</Alert>
-										{/if}
-										<Label class="space-y-2">
-											<span>Your email</span>
-											<Input
-												type="email"
-												name="email"
-												bind:value={userData.email}
-												placeholder="name@company.com"
-												required
-											/>
-										</Label>
-										<Label class="space-y-2">
-											<span>Your password</span>
-											<Input
-												type="password"
-												name="password"
-												bind:value={userData.password}
-												placeholder="•••••"
-												required
-											/>
-										</Label>
-										<div class="flex items-start">
-											<!-- <Checkbox>Remember me</Checkbox> -->
-											<a
-												href="/"
-												class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-												>Forgot password?</a
-											>
-										</div>
-										<Button type="submit" class="w-full1">Sign in</Button>
-										<!-- svelte-ignore a11y-no-static-element-interactions -->
-										<p class="text-sm font-light text-gray-400">
-											<!-- svelte-ignore a11y-click-events-have-key-events -->
-											<!-- svelte-ignore a11y-no-static-element-interactions -->
-											<!-- svelte-ignore a11y-missing-attribute -->
-											Don’t have an account yet?
-											<a
-												on:click={() => {
-													login = false;
-												}}
-												class="text-primary-600 dark:text-primary-500 font-medium hover:underline"
-												>Sign up</a
-											>
-										</p>
-									</form>
-								</div>
-							</Register>
-						</Section>
+								</p>
+							</span>
+						</form>
 					</div>
 				</div>
 			</SignedOut>
 		{:else}
 			<SignedOut let:auth>
-				<div class="min-w-screen flex min-h-screen flex-col items-center justify-center">
-					<div class="mx-4 w-full max-w-2xl">
-						<Section name="login">
-							<Register href="/">
-								<svelte:fragment slot="top">
-									<!-- <img class="mr-2 h-8 w-8" src="/images/logo.svg" alt="logo" /> -->
-									<img
-										class="mr-2 h-32 w-32"
-										src="https://i.postimg.cc/Gm7yDmVc/logo-white.png"
-										alt="logo"
-									/>
-									<!-- Happy Heart -->
-								</svelte:fragment>
-								<div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-									<form
-										on:submit={(e) => {
-											e.preventDefault();
-											phraseData2(auth);
+				<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+					<img class="topbarLogo" src="https://i.postimg.cc/9Xwj56PC/logotext.png" alt="Logo">
+
+					<script>
+						window.addEventListener('scroll', () => {
+							const topBar = document.getElementById('topBar');
+							if (window.scrollY > 0) {
+								topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+								topBar.style.transition = 'box-shadow 0.5s';
+							} else {
+								topBar.style.boxShadow = 'none';
+								topBar.style.transition = 'box-shadow 0.5s';
+							}
+						});
+					</script>
+				</section>
+
+				<div class="flex flex-col" style="height: 100%; width: 100%; background: #ECECEC; margin-top: -55px; align-items: center; justify-content: center;">
+					<div class="flex flex-col" style="width: 80%; gap: 20px;">
+						<span class="flex flex-row" style="width: 100%; padding: 20px 0; align-items: center; justify-content: center; gap: 10px;">
+							<img style="height: 34px; width: 34px;" src="https://i.postimg.cc/YCjBH9rS/favicon.png" alt="logo">
+							<h1 style="font-size: 28px; font-family: 'Rubik', sans-serif;">Signup</h1>
+						</span>
+						<form class="flex flex-col" style="width: 100%; gap: 20px;"
+							on:submit={(e) => {
+								e.preventDefault();
+								phraseData2(auth);
+							}}
+							action="/"
+						>
+							{#if error.status}
+								<Alert color="red">
+									<span class="font-medium">{error2.title}</span>
+									{error2.message}
+								</Alert>
+							{/if}
+							<span class="flex flex-col" style="width: 100%; gap: 10px;">
+								<input
+									style="border-radius: 10px; padding: 8px 10px;"
+									type="text"
+									name="name"
+									placeholder="Full Name"
+									bind:value={userData2.displayName}
+									required
+								/>
+								<input
+									style="border-radius: 10px; padding: 8px 10px;"
+									type="email"
+									name="email"
+									placeholder="Email Address"
+									bind:value={userData2.email}
+									required
+								/>
+								<input
+									style="border-radius: 10px; padding: 8px 10px;"
+									type="password"
+									name="password"
+									bind:value={userData2.password}
+									placeholder="Password"
+									required
+								/>
+								<input
+									style="border-radius: 10px; padding: 8px 10px;"
+									type="password"
+									name="cpassword"
+									bind:value={userData2.cpassword}
+									placeholder="Confirm Password"
+									required
+								/>
+							</span>
+							<button type="submit" class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;">Signup</button>
+							<!-- svelte-ignore a11y-no-static-element-interactions -->
+							<span class="flex flex-col" style="gap: 10px;">
+								<p class="light" style="width: 100%; color: var(--blackGrey); text-transform: uppercase; font-size: 12px; text-align-last: center; padding-top: 20px;">
+									<!-- svelte-ignore a11y-click-events-have-key-events -->
+									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<!-- svelte-ignore a11y-missing-attribute -->
+									Existing User?
+									<a
+										on:click={() => {
+											login = true;
 										}}
-										class="flex flex-col space-y-6"
-										action="/"
+										class="regular" style="color: var(--accent);"
+										>Login</a
 									>
-										<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-white">Sign Up</h3>
-										{#if error.status}
-											<Alert color="red">
-												<span class="font-medium">{error2.title}</span>
-												{error2.message}
-											</Alert>
-										{/if}
-										<Label class="space-y-2">
-											<span>Your Full Name</span>
-											<Input
-												type="text"
-												name="name"
-												placeholder="Jhon Smith"
-												bind:value={userData2.displayName}
-												required
-											/>
-										</Label>
-										<Label class="space-y-2">
-											<span>Your email</span>
-											<Input
-												type="email"
-												name="email"
-												placeholder="name@company.com"
-												bind:value={userData2.email}
-												required
-											/>
-										</Label>
-										<Label class="space-y-2">
-											<span>Your password</span>
-											<Input
-												type="password"
-												name="password"
-												bind:value={userData2.password}
-												placeholder="•••••"
-												required
-											/>
-										</Label>
-										<Label class="space-y-2">
-											<span>Confirm password</span>
-											<Input
-												type="password"
-												name="cpassword"
-												bind:value={userData2.cpassword}
-												placeholder="•••••"
-												required
-											/>
-										</Label>
-										<Button type="submit" class="w-full1">Sign Up</Button>
-										<p class="text-sm font-light text-gray-400">
-											<!-- svelte-ignore a11y-no-static-element-interactions -->
-											<!-- svelte-ignore a11y-missing-attribute -->
-											<!-- svelte-ignore a11y-click-events-have-key-events -->
-											Already have an account yet?
-											<a
-												on:click={() => {
-													login = true;
-												}}
-												class="text-primary-600 dark:text-primary-500 font-medium hover:underline"
-												>Log in</a
-											>
-										</p>
-									</form>
-								</div>
-							</Register>
-						</Section>
+								</p>
+							</span>
+						</form>
 					</div>
 				</div>
 			</SignedOut>

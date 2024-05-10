@@ -99,10 +99,6 @@
 
 				<button type="submit" style="background: #1B72B5;">Submit</button>
 				<span id="formMsgStatus" class="flex flex-row light" style="width: 100%; color: var(--accent); font-size: 12px; text-transform: uppercase; align-items: center; justify-content: center; gap: 10px;"></span>
-
-				<p class="light" id="loginLink" style="width: 100%; color: var(--grey); text-transform: uppercase; font-size: 12px; text-align-last: center; padding-bottom: 20px;">
-					Existing User? <a href="/login" class="regular" style="color: var(--accent);">Login</a>
-				</p>
 			</form>
 		</section>
 
