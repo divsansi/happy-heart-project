@@ -60,7 +60,7 @@
 		<section class="flex flex-col" style="background: var(--whiteGrey); padding: 25px; border-radius: 15px; align-items: flex-start; gap: 5px;">
 			<div class="flex flex-row" style="align-items: center; gap: 5px;">
 				<h1>Welcome</h1>
-				<h1 class="light" style="color: var(--blackGrey);">{user.displayName.split(' ')[0]}</h1>
+				<h1 class="light" style="color: var(--blackGrey);">{user && user.displayName ? user.displayName.split(' ')[0] : ''}</h1>
 			</div>
 
 			<div class="flex flex-row" style="align-items: center; gap: 5px;">
