@@ -67,38 +67,57 @@
 </script>
 
 <SignedIn let:user>
-	<div
-		class="flex flex-col items-center justify-center gap-4 overflow-y-scroll p-4 pb-24 md:grid md:grid-cols-3 md:pt-16"
-	>
-		<!-- Existing Welcome Card, Alert, Quotes, and Navigation Buttons -->
-		<h2 class="text-2xl font-semibold text-white">Your Patients</h2>
-		<!-- Chats Section, showing all distinct chats -->
-		<Collection ref={`counselor/${user.uid}/chats`} let:data let:count>
-			{#each duids(data) as chat}
-				<div class="flex w-full flex-col gap-4 rounded-lg p-4 shadow-sm backdrop-blur-md">
-					<div class="flex w-full flex-row items-center justify-between gap-4">
-						<!-- svelte-ignore a11y-img-redundant-alt -->
-						<img
-							class="h-8 w-8 rounded-full backdrop-blur-md"
-							src={avatar(chat.chatuid)}
-							alt="User image"
-						/>
-						<h2 class="text-wrap text-xs font-semibold">{chat.chatuid}</h2>
-					</div>
-					<div class="flex w-full flex-row items-center justify-between gap-4">
-						<p class="text-gray-600">Status: Available</p>
-						<a
-							href={`/prescribe/write/${chat.chatuid}`}
-							class="mt-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-						>
-							Write Prescription
+	<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+		<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
+
+		<div class="userpfp">
+			<img src="{avatar(user.uid)}" alt="Profile">
+		</div>
+
+		<script>
+			const userpfp = document.querySelector('.userpfp');
+
+			if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
+				userpfp.style.display = 'none';
+			}
+
+			window.addEventListener('scroll', () => {
+				const topBar = document.getElementById('topBar');
+				if (window.scrollY > 0) {
+					topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+					topBar.style.transition = 'box-shadow 0.5s';
+				} else {
+					topBar.style.boxShadow = 'none';
+					topBar.style.transition = 'box-shadow 0.5s';
+				}
+			});
+		</script>
+	</section>
+
+	<main>
+
+		<section class="flex flex-col" style="justify-content: center; gap: 20px;">
+			<h1 style="color: white;">Your Patients</h1>
+
+			<div class="flex flex-col" style="height: calc(100vh - 280px); width: 100%; border-radius: 10px; overflow: auto; gap: 10px;">
+				<Collection ref={`counselor/${user.uid}/chats`} let:data let:count>
+					{#each duids(data) as chat}
+						<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href={`/prescribe/write/${chat.chatuid}`}>
+							<span class="flex flex-row" style="align-items: center; gap: 10px;">
+								<img src="{avatar(chat.chatuid)}" alt="Profile" style="width: 40px; height: 40px; background: #FFFFFF; border-radius: 10px;">
+								<span class="flex flex-col" style="gap: 2px;">
+									<h1 style="word-break: break-word;">{chat.chatuid}</h1>
+									<p class="light" style="color: var(--grey); font-size: 10px; text-transform: uppercase;">Write Prescription</p>
+								</span>
+							</span>
+							<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
 						</a>
-					</div>
-				</div>
-			{/each}
-			{#if count === 0}
-				<p>No Patients available at the moment.</p>
-			{/if}
-		</Collection>
-	</div>
+					{/each}
+					{#if count === 0}
+						<p class="light" style="color: white;">No chats available at the moment.</p>
+					{/if}
+				</Collection>
+			</div>
+		</section>
+	</main>
 </SignedIn>
