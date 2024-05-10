@@ -5,6 +5,7 @@
 	import { setNearestCity, getNearestCity } from '$lib/firebase';
 	import toast, { Toaster } from 'svelte-french-toast';
 	import { Button, Input } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 
 	const userData = {
 		nearestCity: 'Loading'
@@ -29,6 +30,39 @@
 		const av = createAvatar(identicon, { seed: uid, backgroundType: ['solid'] });
 		return av.toDataUriSync();
 	};
+
+	onMount(() => {
+		const notificationForm = document.getElementById('notificationForm');
+		const notiSelect = document.getElementById('notiSelect');
+
+		notificationForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			const formData = new FormData(notificationForm);
+			if (formData.get('notifications') === 'yes') {
+				document.cookie = "notifications=yes";
+				console.log('Notifications enabled');
+				Notification.requestPermission().then((permission) => {
+					if (permission === 'granted') {
+						const notification = new Notification('TEST NOTIFICATION', {
+							body: 'This is what a notification looks like',
+							icon: 'https://i.postimg.cc/T1b8Vb2p/logo.png'
+						});
+					}
+				});
+				window.location.reload();
+			} else {
+				document.cookie = "notifications=no";
+				console.log('Notifications disabled');
+			}
+		});
+
+		if (document.cookie.includes('notifications=yes')) {
+			notiSelect.value = 'yes';
+		} else {
+			notiSelect.value = 'no';
+		}
+	});
 </script>
 
 <Toaster />
@@ -79,7 +113,7 @@
 					<i class="fa-solid fa-location-arrow" style="color: #1B72B5; font-size: 12px;"></i>
 					<h2 class="regular" style="color: var(--blackGrey);">{userData.nearestCity}</h2>
 				</span>
-				
+
 				<span class="flex flex-col" style="width: 100%; margin-top: 15px; gap: 10px;">
 					{#if cityEdit}
 						<div class="flex flex-row" style="gap: 10px;">
@@ -91,6 +125,20 @@
 					{/if}
 					<button on:click={editCity} class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;">Edit</button>
 				</span>
+			</div>
+		</section>
+
+		<section class="flex flex-col" style="background: var(--whiteGrey); padding: 40px 25px 30px 25px; border-radius: 15px; align-items: center; gap: 5px;">
+			<div class="flex flex-col" style="width: 100%; align-items: center; gap: 20px;">
+				<h1 class="light" style="color: var(--blackGrey);">Notifications</h1>
+				<p class="light" style="color: var(--blackGrey);">Would you like to receive a daily motivational notification? This can be changed at any time.</p>
+				<form id="notificationForm" class="flex flex-col" style="height: auto; width: 100%; justify-content: center; gap: 10px;" method="POST">
+					<select id="notiSelect" name="notifications" style="width: 100%; border-radius: 10px;">
+						<option id="notiYes" value="yes">Yes</option>
+						<option id="notiNo" value="no">No</option>
+					</select>
+					<button type="submit" class="flex flex-row" style="width: 100%; background: #1B72B5; color: #FFFFFF; text-transform: uppercase; padding: 10px; font-size: 12px; border: none; border-radius: 10px; align-items: center; justify-content: center; gap: 10px; cursor: pointer;">Save</button>
+				</form>
 			</div>
 		</section>
 

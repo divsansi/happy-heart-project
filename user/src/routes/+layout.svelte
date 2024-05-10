@@ -8,6 +8,8 @@
 	import { signInWithEmailAndPassword } from 'firebase/auth';
 	import { Alert, Button, Input, Label } from 'flowbite-svelte';
 	import { Register, Section } from 'flowbite-svelte-blocks';
+	import { onMount } from 'svelte';
+	import { motivationalNotification } from '$lib/motivationalnotification';
 
 	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import {
@@ -162,6 +164,10 @@
 			}
 		}
 	};
+
+	onMount(() => {
+		motivationalNotification();
+	});
 </script>
 
 <FirebaseApp {auth} {firestore}>
