@@ -156,6 +156,11 @@
 					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
 				</a>
 
+				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/gethelp">
+					<h1 class="light" style="font-size: 14px;">Get Help</h1>
+					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
+				</a>
+
 				<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href="/speeches">
 					<h1 class="light" style="font-size: 14px;">Speeches</h1>
 					<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
