@@ -84,7 +84,7 @@
 					<i class="fa-solid fa-chevron-left" style="color: white;"></i>
 					<h1 style="color: white;">Chats</h1>
 				</a>
-				<div class="flex flex-col" style="height: calc(100vh - 280px); width: 100%; border-radius: 10px; overflow: auto; gap: 10px;">
+				<div class="flex flex-col" style="height: calc(100vh - 280px); width: 100%; background: #D9D9D9; padding: 10px; border-radius: 10px; overflow: auto; gap: 10px;">
 					{#each data as post}
 						<div class={`flex w-full ${post.uid === user.uid ? 'justify-end' : 'justify-start'}`}>
 							<div class={`flex items-center ${post.uid === user.uid ? 'flex-row-reverse' : 'flex-row'}`} style="gap: 20px;">
