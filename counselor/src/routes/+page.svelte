@@ -27,11 +27,6 @@
 	const auth = getAuth();
 	let intervalId: any;
 
-	const date = new Date();
-	const hours = date.getHours();
-	let greeting = hours < 12 ? 'Good Morning' : hours < 18 ? 'Good Afternoon' : 'Good Evening';
-	const quote = getRandomQuote();
-
 	async function updateAvailability() {
 		const user = auth.currentUser;
 		if (user) {
@@ -73,57 +68,57 @@
 </script>
 
 <SignedIn let:user>
-	<div
-		class="mx-auto flex max-w-xl flex-col items-center justify-center gap-4 overflow-y-scroll pb-24"
-	>
-		<!-- Existing Welcome Card, Alert, Quotes, and Navigation Buttons -->
-		<div class="w-full max-w-sm rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800">
-			<div class="flex flex-col items-center pb-10 pt-10">
-				<!-- svelte-ignore a11y-img-redundant-alt -->
-				<img
-					class="mb-3 h-24 w-24 rounded-full shadow-lg"
-					src={avatar(user.uid)}
-					alt="Profile image"
-				/>
-				<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.displayName}</h5>
-				<span class="text-sm text-gray-400">{greeting}!</span>
-				<!-- <div class="mt-4 flex md:mt-6">
-					<a
-						href="/profile"
-						class="ms-2 rounded-lg backdrop-blur-md px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-						>Profile</a
-					>
-				</div> -->
-			</div>
+	<section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
+		<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
+
+		<div class="userpfp">
+			<img src="{avatar(user.uid)}" alt="Profile">
 		</div>
 
-		<!-- Chats Section, showing all distinct chats -->
-		<Collection ref={`counselor/${user.uid}/chats`} let:data let:count>
-			{#each duids(data) as chat}
-				<div class="flex w-full flex-col gap-4 rounded-lg p-4 shadow-sm backdrop-blur-md">
-					<div class="flex w-full flex-row items-center justify-between gap-4">
-						<!-- svelte-ignore a11y-img-redundant-alt -->
-						<img
-							class="h-8 w-8 rounded-full backdrop-blur-md"
-							src={avatar(chat.chatuid)}
-							alt="User image"
-						/>
-						<h2 class="text-wrap text-xs font-semibold">{chat.chatuid}</h2>
-					</div>
-					<div class="flex w-full flex-row items-center justify-between gap-4">
-						<p class="text-gray-600">Status: Available</p>
-						<a
-							href={`/gethelp/chat/${chat.chatuid}`}
-							class="mt-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-						>
-							Connect
+		<script>
+			const userpfp = document.querySelector('.userpfp');
+
+			if (window.location.pathname === '/login' || window.location.pathname === '/register' ||  window.location.pathname === '/logout') {
+				userpfp.style.display = 'none';
+			}
+
+			window.addEventListener('scroll', () => {
+				const topBar = document.getElementById('topBar');
+				if (window.scrollY > 0) {
+					topBar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+					topBar.style.transition = 'box-shadow 0.5s';
+				} else {
+					topBar.style.boxShadow = 'none';
+					topBar.style.transition = 'box-shadow 0.5s';
+				}
+			});
+		</script>
+	</section>
+
+	<main>
+
+		<section class="flex flex-col" style="justify-content: center; gap: 20px;">
+			<h1 style="color: white;">Available Chats</h1>
+
+			<div class="flex flex-col" style="height: calc(100vh - 280px); width: 100%; border-radius: 10px; overflow: auto; gap: 10px;">
+				<Collection ref={`counselor/${user.uid}/chats`} let:data let:count>
+					{#each duids(data) as chat}
+						<a class="flex flex-row" style="background: var(--accent2); padding: 20px 25px; border-radius: 15px; align-items: center; justify-content: space-between;" href={`/gethelp/chat/${chat.chatuid}`}>
+							<span class="flex flex-row" style="align-items: center; gap: 10px;">
+								<img src="{avatar(chat.chatuid)}" alt="Profile" style="width: 40px; height: 40px; background: #FFFFFF; border-radius: 10px;">
+								<span class="flex flex-col" style="gap: 2px;">
+									<h1 style="word-break: break-word;">{chat.chatuid}</h1>
+									<p class="light" style="color: var(--grey); font-size: 10px; text-transform: uppercase;">Connect</p>
+								</span>
+							</span>
+							<i class="fa-solid fa-chevron-right" style="color: var(--accent); font-size: 10px;"></i>
 						</a>
-					</div>
-				</div>
-			{/each}
-			{#if count === 0}
-				<p>No chats available at the moment.</p>
-			{/if}
-		</Collection>
-	</div>
+					{/each}
+					{#if count === 0}
+						<p class="light" style="color: white;">No chats available at the moment.</p>
+					{/if}
+				</Collection>
+			</div>
+		</section>
+	</main>
 </SignedIn>
