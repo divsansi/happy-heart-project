@@ -6,6 +6,10 @@
 <section id="topBar" class="flex flex-row" style="width: 100%; align-items: center; justify-content: space-between; padding: 25px; margin-bottom: -20px; background: transparent; position: sticky; top: 0; backdrop-filter: blur(25px);">
 	<img class="topbarLogo" src="https://i.postimg.cc/sgx3L1gg/logotext-2.png" alt="Logo">
 
+	<div class="userpfp" style="visibility: hidden;">
+		<!-- <img src="{avatar(user.uid)}" alt="Profile"> -->
+	</div>
+
 	<script>
 		const userpfp = document.querySelector('.userpfp');
 
