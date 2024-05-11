@@ -115,3 +115,11 @@ npm run dev
 ```
 - Go to the url in the terminal
 - Now the `pharmacy` website should launch in the web browser
+
+<hr>
+
+
+## Live Demo:
+- User: https://happy-heart-project-d9hv.vercel.app
+- Admin: https://happy-heart-project-vvjr.vercel.app
+- Counselor: https://happy-heart-project.vercel.app
