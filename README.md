@@ -116,7 +116,7 @@ npm run dev
 - Go to the url in the terminal
 - Now the `pharmacy` website should launch in the web browser
 
-To view the project:
+## To view the project:
 - Open developer tools in your browser
 - Toggle device emulation into mobile
 <hr>
