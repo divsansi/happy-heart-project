@@ -1,6 +1,6 @@
 {
-	"name": "HappyHeart",
-	"short_name": "HappyHeart",
+	"name": "HappyHeart Admin",
+	"short_name": "HappyHeart Admin",
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#f7f7f7",
