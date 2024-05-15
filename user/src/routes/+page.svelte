@@ -12,6 +12,8 @@
 		return av.toDataUriSync();
 	};
 
+	const quote = getRandomQuote();
+
 	let onBoarding = false;
 
 	const checkOnboarding = async (user: any) => {
@@ -112,34 +114,10 @@
 				<h1>Quote of the day</h1>
 
 				<div class="flex flex-col" style="gap: 15px;">
-					<p class="light" id="quoteContent">Fetching...</p>
-					<p class="regular italic" style="width: 100%; text-align-last: right;" id="quoteAuthor">Fetching...</p>
+					<p class="light" id="quoteContent">{quote.QUOTE}</p>
+					<p class="regular italic" style="width: 100%; text-align-last: right;" id="quoteAuthor">{quote.AUTHOR}</p>
 				</div>
 			</div>
-
-			<script>
-				const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-				const targetUrl = 'https://zenquotes.io/api/today';
-
-				function fetchQuote() {
-					fetch(proxyUrl + targetUrl)
-						.then(response => response.json())
-						.then(data => {
-							const quote = data[0].q;
-							const author = data[0].a;
-
-							const quoteContent = document.getElementById('quoteContent');
-							const quoteAuthor = document.getElementById('quoteAuthor');
-
-							quoteContent.innerHTML = quote;
-							quoteAuthor.innerHTML = `- ${author}`;
-						})
-						.catch(error => console.error("Error fetching quote:", error));
-				}
-
-				fetchQuote();
-				setTimeout(fetchQuote, 3000);
-			</script>
 		</section>
 
 		<section class="flex flex-col" style="justify-content: center; gap: 20px;">
